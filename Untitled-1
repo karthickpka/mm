@@ -1,0 +1,6 @@
+http://localhost:4444/updateRecord?imei=1&model=1&mrp=1&mop=1&discount=1&comment=xyz&avail=unsold
+http://localhost:4444/insertRecord?imei=1&model=1&mrp=1&mop=1&discount=1&comment=xyz&avail=unsold
+http://localhost:4444/viewall
+http://localhost:4444/deleteRecord?imei=1
+http://localhost:4444/searchRecord?name=Comment&value=abc
+

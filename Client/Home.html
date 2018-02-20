@@ -1,0 +1,73 @@
+<html>  
+<link rel="stylesheet" type="text/css" href="../CSS/myStyle.css"></link>
+     
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="../Js/homeFns.js"></script>
+<script src="../Js/Authenticate.js"></script>
+
+
+    <h1>MM Agencies Home Page </h1>
+    <button id="Billing" style="width:20%;height:50px" onclick="goToBilling()"><b>GoToBilling</b></button>
+    <br><br>
+    <input id="Password" type="password" placeholder="enter Password"/>
+    <button id="PasswordBtn" style="width:20%;" onclick="pwd()"><b>Login</b></button>
+    <br>
+    <br>
+    <Body  style="margin-left:100;background-color: lightblue;" onload="resetInputFields()">
+     <!onLoad="buildHtmlTable('#excelDataTable')">
+ 
+      
+        <p> Enter Details and Proceed</p>
+        <p></p>
+        <div>
+          <input id="IMEI" name="IMEI" type="text" placeholder="enter IMEI" required/>
+          <input id="Date" name="Date" type="date" placeholder="enter Date" />
+          <input id="Model" name="Model" type="text" placeholder="enter Model" required/>
+          <div>
+          <input id="MRP" name="MRP" type="text" placeholder="enter MRP" />
+          <input id="MOP" name="MOP" type="text" placeholder="enter MOP" />
+          <input id="Discount" name="Discount" type="text" placeholder="enter Dicount" />
+          </div>
+          <div>
+          <input id="Comment" name="Comment" type="text" placeholder="enter Comment" />
+          <select id="Availability" name="Availability" disabled>
+            <option value="UnSold">UnSold</option>
+            <option value="Sold">Sold</option>
+          </select>
+        </div>  
+        <br></br>
+         
+        </div>
+        <!button onclick="viewAll()"ViewAll</button>
+        <button onclick="Add()">Add Record</button>
+        <button onclick="Edit()">Edit Record</button>
+        <button id="Delete" onclick="Delete()" disabled>Delete Record</button>
+        <button onclick="Summary()" >Inventory Summary</button>
+        <button onclick="DailySummary()">Daily Summary</button>
+        <br></br>
+        
+        <div>
+          <select id="Name" name="Name">
+            <option value="_id">IMEI</option>
+            <option value="Date">Date</option>
+            <option value="Model">Model</option>
+            <option value="MRP">MRP</option>
+            <option value="MOP">MOP</option>
+            <option value="Discount">Discount</option>
+            <option value="Comment">Comment</option>
+          </select>
+
+          <input id="SearchValue" name="SearchValue" type="text" placeholder="View All Value" />
+            <button onclick="Search()">Search</button>
+        </div>
+
+        
+        <div> 
+        <br></br>
+        <b><label id="Summary" hidden>Total / Sold / Unsold : 0 / 0 / 0</label> </b>
+        <br><br><table id="excelDataTable" border="1" style="border-collapse:collapse;">
+        </table>
+        </div>
+
+    </Body>
+</html>

@@ -1,0 +1,13 @@
+@media print {
+  .printbutton {
+  visibility: hidden;
+  display: none;
+    }
+}
+table {
+    width: 70%;
+}
+th {
+    height: 50px;
+}
+tr { line-height: 30px; }

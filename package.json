@@ -1,11 +1,25 @@
 {
   "name": "mm",
   "version": "1.0.0",
-  "description": "Test View only",
+  "description": "MM Agencies Inventory Management",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "Karthick",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karthickpka/mm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/karthickpka/mm/issues"
+  },
+  "homepage": "https://github.com/karthickpka/mm#readme"
 }

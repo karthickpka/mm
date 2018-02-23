@@ -1,6 +1,14 @@
 <html>  
 <link rel="stylesheet" type="text/css" href="../CSS/myStyle.css"></link>
-     
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+</style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="../Js/homeFns.js"></script>
 <script src="../Js/Authenticate.js"></script>
@@ -13,27 +21,26 @@
     <button id="PasswordBtn" style="width:20%;" onclick="pwd()"><b>Login</b></button>
     <br>
     <br>
-    <Body  style="margin-left:100;background-color: lightblue;" onload="resetInputFields()">
+    <Body  style="margin-left:100;background-color: lightblue;" onload="resetInputFields();setDate();">
      <!onLoad="buildHtmlTable('#excelDataTable')">
  
       
-        <p> Enter Details and Proceed</p>
+        <p><b> Enter Details and Proceed</b></p>
+        <p></p>
+        <label><input type="checkbox" id="IsSpares" name="IsSpares" value="No" onclick="ChangeIMEI_Box_To_Count()">Check this for Covers and Pouches</label>
         <p></p>
         <div>
           <input id="IMEI" name="IMEI" type="text" placeholder="enter IMEI" required/>
-          <input id="Date" name="Date" type="date" placeholder="enter Date" />
           <input id="Model" name="Model" type="text" placeholder="enter Model" required/>
+          <input id="Date" name="Date" type="date" placeholder="enter Date" />
           <div>
           <input id="MRP" name="MRP" type="text" placeholder="enter MRP" />
           <input id="MOP" name="MOP" type="text" placeholder="enter MOP" />
-          <input id="Discount" name="Discount" type="text" placeholder="enter Dicount" />
+          <input id="Discount" name="Discount" type="text" placeholder="enter Discount" />
           </div>
           <div>
           <input id="Comment" name="Comment" type="text" placeholder="enter Comment" />
-          <select id="Availability" name="Availability" disabled>
-            <option value="UnSold">UnSold</option>
-            <option value="Sold">Sold</option>
-          </select>
+          <input id="Availability" name="Availability" type="text" placeholder="enter Count" value="1" disabled/>
         </div>  
         <br></br>
          

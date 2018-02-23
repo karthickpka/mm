@@ -1,7 +1,18 @@
+var setDate = function(){
+        var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+       // console.log([year, month, day].join('-'))
+        document.getElementById("Date").value = [year, month, day].join('-');
+        }
+   
    function getProdDetails()
     {
-        //alert(window.location.toString().split("=")[1])
-        document.getElementById("Date").value =0// "08/08/2017"
+        setDate();
+        //alert(window.location.toString())
         var xmlHttp = new XMLHttpRequest();
         var queryString="/searchRecord?name=_id&value="+ window.location.toString().split("=")[1];
         xmlHttp.open( "GET", queryString, false ); // false for synchronous request
@@ -16,8 +27,8 @@
         document.getElementById("Discount").value=temp[0]["Discount"]
         document.getElementById("Selling Price").innerHTML = document.getElementById("MRP").innerHTML 
                                                     - document.getElementById("Discount").value
-    
-        if(temp[0]["Availability"]=="Sold")
+        
+        if(temp[0]["Availability"]==0)
             {
                 //alert("alredy Sold")
                 // Disable Div
@@ -33,7 +44,7 @@
                 }
 
                 var xmlHttp1 = new XMLHttpRequest();
-                var queryString1="/searchBillingRecord?name=_id&value="+ window.location.toString().split("=")[1];
+                var queryString1="/searchBillingRecord?name=_id&value="+ window.location.toString().split("=")[1]+"_"+document.getElementById("BillNo").innerHTML;
                 xmlHttp1.open( "GET", queryString1, false ); // false for synchronous request
                 xmlHttp1.send();
                 tempBill = JSON.parse(xmlHttp1.responseText);
@@ -49,16 +60,17 @@
                 //alert(document.getElementById("Discount").innerHTML )
                 // Get Customer Details from billing table
             }
-        else{
-        //alert(JSON.parse(xmlHttp.responseText)[0]["_id"]);
-            document.getElementById("Date").value = Date();
-            // Generate Bill Number
+        else if(!document.getElementById("BillNo").innerHTML)
+        {
+           // alert('no bill no')
             var xmlHttp1 = new XMLHttpRequest();
             xmlHttp1.open( "GET", "/searchBillingRecord", false ); // false for synchronous request
             xmlHttp1.send();
             //alert(xmlHttp1.responseText)
             document.getElementById("BillNo").innerHTML = parseInt(xmlHttp1.responseText) + 1;
-            }
+        }
+        else
+        alert('unknown error')
     }
         
 
@@ -85,7 +97,7 @@ function sellFunction(){
 
             // Update Inventory table
             queryString1  = "/updateRecord?imei="+temp[0]["_id"] +
-                            "&avail="+"Sold";   
+                            "&avail="+(parseInt(temp[0].Availability)-1).toString();   
             var xmlHttp1 = new XMLHttpRequest();
             xmlHttp1.open( "GET", queryString1, false ); // false for synchronous request
             xmlHttp1.send();

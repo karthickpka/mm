@@ -1,25 +1,57 @@
+var setDate = function(){
+        var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+        console.log([year, month, day].join('-'))
+        document.getElementById("Date").value = [year, month, day].join('-');
+        }
+
+function ChangeIMEI_Box_To_Count()
+{
+if(document.getElementById('IsSpares').checked)
+{
+  document.getElementById("Availability").value = '';
+  document.getElementById("IMEI").value='';
+  document.getElementById("Availability").disabled = false;
+  document.getElementById("IMEI").disabled=true;
+}
+else{
+  document.getElementById("Availability").value = 1;
+  document.getElementById("IMEI").value='';
+  document.getElementById("Availability").disabled = true;
+  document.getElementById("IMEI").disabled=false;}
+  }
+
+
 function Add()
 {
 //http://localhost:4444/insertRecord?imei=1&model=1&mrp=1&mop=1&discount=1&comment=xyz
- if(document.getElementById("IMEI").value)
+  if(document.getElementById('IsSpares').checked){
+        document.getElementById("IMEI").value = document.getElementById("Model").value;
+      }
+ if(document.getElementById("IMEI").value && document.getElementById("Model").value && document.getElementById("Availability").value)
     {
-    queryString  = "/insertRecord?imei="+document.getElementById("IMEI").value +
+         queryString  = "/insertRecord?imei="+document.getElementById("IMEI").value +
                     "&date="+document.getElementById("Date").value +
                     "&model="+document.getElementById("Model").value +
                     "&mrp="+document.getElementById("MRP").value +
                     "&mop="+document.getElementById("MOP").value +
                     "&discount="+document.getElementById("Discount").value +
                     "&comment="+document.getElementById("Comment").value +
-                    "&avail="+document.getElementById("Availability").value
+                    "&avail="+document.getElementById("Availability").value +
+                    "&sparesflag="+document.getElementById('IsSpares').checked
     
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", queryString, false ); // false for synchronous request
         xmlHttp.send();
         alert(xmlHttp.responseText);
         viewAll();
-    }
+      }
   else
-  {alert("Ener atleast IMEI number before trying to ADD")}
+  {alert("Ener atleast IMEI, Model and Count before trying to ADD")}
 }
 
 function Edit()
@@ -48,9 +80,12 @@ function Edit()
 
 function Delete()
 {
+  if(document.getElementById('IsSpares').checked){
+        document.getElementById("IMEI").value = document.getElementById("Model").value;
+      }
    if(document.getElementById("IMEI").value)
     {
-    queryString  = "/deleteRecord?imei="+document.getElementById("IMEI").value;
+    queryString  = "/deleteRecord?imei="+document.getElementById("IMEI").value+"&sparesflag="+document.getElementById('IsSpares').checked;
                     
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", queryString, false ); // false for synchronous request
@@ -81,8 +116,8 @@ function Search(){
     // Update Summary
     document.getElementById("Summary").innerHTML="Total / Sold / Unsold : " +
         myList.length + " / " +
-        myList.filter(function(tmp){ return tmp.Availability=="Sold"}).length + " / " +
-        myList.filter(function(tmp){ return tmp.Availability=="UnSold"}).length 
+        myList.filter(function(tmp){ return tmp.Availability=="0"}).length + " / " +
+        myList.filter(function(tmp){ return tmp.Availability>0}).length 
     document.getElementById("Summary").hidden = false;
 
     document.getElementById("excelDataTable").innerHTML="";
@@ -103,8 +138,8 @@ function viewAll(){
    document.getElementById("Summary").hidden = false;
     document.getElementById("Summary").innerHTML="Total / Sold / Unsold : " +
         myList.length + " / " +
-        myList.filter(function(tmp){ return tmp.Availability=="Sold"}).length + " / " +
-        myList.filter(function(tmp){ return tmp.Availability=="UnSold"}).length 
+        myList.filter(function(tmp){ return tmp.Availability=="0"}).length + " / " +
+        myList.filter(function(tmp){ return tmp.Availability>0}).length 
     
 // Reset Input box values
     resetInputFields();
@@ -166,20 +201,45 @@ function resetInputFields(){
 
 function goToBilling()
 {
-  if(document.getElementById("IMEI").value)
+  if(document.getElementById("IMEI").value || document.getElementById('IsSpares').checked)
     {
+        if(!document.getElementById("IMEI").value)
+        {
+          document.getElementById("IMEI").value=document.getElementById("Model").value;
+        }
+        
+        var queryString="/searchRecord?name=_id&value="+ document.getElementById("IMEI").value;   
         var xmlHttp = new XMLHttpRequest();
-        var queryString="/searchRecord?name=_id&value="+ document.getElementById("IMEI").value;
+        //var queryString="/searchRecord?name=_id&value="+ document.getElementById("IMEI").value;
         xmlHttp.open( "GET", queryString, false ); // false for synchronous request
         xmlHttp.send();
         //alert(JSON.parse(xmlHttp.responseText).length)
         if(JSON.parse(xmlHttp.responseText).length>0)
           window.location.href = "/billing?imei="+document.getElementById("IMEI").value;
         else
-          alert("Given IMEI is not in inventory")  
-  }
-  else 
-    alert("Please enter IMEI to bill")
+        {
+         /* queryString="/searchBillingRecord?name=_id&value="+ document.getElementById("IMEI").value;
+          xmlHttp = new XMLHttpRequest();
+          //var queryString="/searchRecord?name=_id&value="+ document.getElementById("IMEI").value;
+          xmlHttp.open( "GET", queryString, false ); // false for synchronous request
+          xmlHttp.send();
+          if(JSON.parse(xmlHttp.responseText).length>0)
+          window.location.href = "/billing?imei="+document.getElementById("IMEI").value;
+          else*/
+          alert("Given IMEI is not in inventory")
+        }  
+    }
+  /*else if(document.getElementById('IsSpares').checked)
+  {
+      if(document.getElementById("Model").value)
+      {
+
+      }
+      else
+        alert("Please enter Model Num to bill Spares");
+  }*/
+  else
+    alert("Please enter IMEI Num to bill");
 
   //resetInputFields();
 }

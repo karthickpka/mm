@@ -15,7 +15,7 @@ insertBillingRecord = function(req,res){
         if (err) console.log(err);//throw err;
         //var pRecord = {_id:1,Date:Date.now(),Model:"M1",MRP:"0",MOP:"0",Discount:"0"};
         //Date:new Date().toString()
-        var pRecord = {_id:req.query.imei.toString(),BillNo:req.query.billno,Date:req.query.date,SellingPrice:req.query.sellingprice,
+        var pRecord = {_id:req.query.imei.toString()+'_'+req.query.billno,BillNo:req.query.billno,Date:req.query.date,SellingPrice:req.query.sellingprice,
             CustName:req.query.name,CustContact:req.query.contact,CustAddress:req.query.address,
             Comment:req.query.comment};
         db.collection(billCollectionName).insert(pRecord,function(err,result){

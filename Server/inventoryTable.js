@@ -32,7 +32,7 @@ insertRecord = function(req,res){
         if(req.query.sparesflag.toString()=='false'){
         var pRecord = {_id:req.query.imei.toString(),Date:req.query.date,Model:req.query.model,
             MRP:req.query.mrp,MOP:req.query.mop,Discount:req.query.discount,
-            Availability:req.query.avail,Comment:req.query.comment};
+            Availability:parseInt(req.query.avail),Comment:req.query.comment};
         db.collection(collectionName).insert(pRecord,function(err,result){
             db.close();
             if(err) res.send(req.query.sparesflag + 'IMEI already exists');//throw err;
@@ -46,7 +46,7 @@ insertRecord = function(req,res){
                 Availability:req.query.avail,Comment:req.query.comment};*/
             var pRecord = {_id:req.query.imei.toString(),Date:req.query.date,Model:req.query.model,
                 MRP:req.query.mrp,MOP:req.query.mop,Discount:req.query.discount,
-                Availability:req.query.avail,Comment:req.query.comment};
+                Availability:parseInt(req.query.avail),Comment:req.query.comment};
             db.collection(collectionNameSpares).insert(pRecord,function(err,result){
                 db.close();
                 if(err) res.send('Error in Adding Spares- Model Already Exists');//throw err;
@@ -92,7 +92,7 @@ deleteRecord = function(req,res){
 
 mongoClient.connect(url, function(err, db) {
         if (err) throw err;
-        console.log(req.query.sparesflag.toString())
+        //console.log(req.query.sparesflag.toString())
         if(req.query.sparesflag.toString()=='false'){
         db.collection(collectionName).remove({_id:req.query.imei.toString()},function(err,result){
             if(err) throw err;
@@ -136,15 +136,7 @@ summary = function(req,res)
 mongoClient.connect(url,function(err,db){
      if (err) throw err;
 
-      db.collection(collectionName).aggregate({$group : { _id : {
-            'Model': '$Model',
-            'Availability': '$Availability'
-                }, count : {$sum : 1}}},
-            {$project: {
-                _id: 0, 
-                Model: '$_id', 
-                countAvail: '$count', 
-            }}).sort({_id:1}).toArray(function(err,result){
+      db.collection(collectionName).aggregate([{ $group: { _id: "$Model", total:{$sum: "$Availability" }}}]).sort({_id:1}).toArray(function(err,result){
         if (err) throw err;    
         res.send(result)
         db.close();

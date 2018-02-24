@@ -1,8 +1,10 @@
 function pwd()
 {
   if(document.getElementById("Password").value=="123" ){
+      document.getElementById("Edit").disabled = false;
       document.getElementById("Delete").disabled = false;}
   else{
+    document.getElementById("Edit").disabled = true;
     document.getElementById("Delete").disabled = true;}
 }
 //http://localhost:4444/insertRecord?imei=1&model=1&mrp=1&mop=1&discount=1&comment=xyz

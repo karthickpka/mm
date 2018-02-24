@@ -5,7 +5,6 @@ var setDate = function(){
         year = d.getFullYear();
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
-        console.log([year, month, day].join('-'))
         document.getElementById("Date").value = [year, month, day].join('-');
         }
 
@@ -52,6 +51,7 @@ function Add()
       }
   else
   {alert("Ener atleast IMEI, Model and Count before trying to ADD")}
+
 }
 
 function Edit()
@@ -114,10 +114,10 @@ function Search(){
     //alert(myList)
     
     // Update Summary
-    document.getElementById("Summary").innerHTML="Total / Sold / Unsold : " +
+    /*document.getElementById("Summary").innerHTML="Total / Sold / Unsold : " +
         myList.length + " / " +
         myList.filter(function(tmp){ return tmp.Availability=="0"}).length + " / " +
-        myList.filter(function(tmp){ return tmp.Availability>0}).length 
+        myList.filter(function(tmp){ return tmp.Availability>0}).length*/ 
     document.getElementById("Summary").hidden = false;
 
     document.getElementById("excelDataTable").innerHTML="";
@@ -190,8 +190,9 @@ function addAllColumnHeaders(myList, selector) {
   return columnSet;
 }
 function resetInputFields(){
+    setDate();
     document.getElementById("IMEI").value ="";
-    document.getElementById("Date").value ="";
+    //document.getElementById("Date").value ="";
     document.getElementById("Model").value ="";
     document.getElementById("MRP").value ="";
     document.getElementById("MOP").value ="";
@@ -201,7 +202,7 @@ function resetInputFields(){
 
 function goToBilling()
 {
-  if(document.getElementById("IMEI").value || document.getElementById('IsSpares').checked)
+  if(document.getElementById("IMEI").value || (document.getElementById('IsSpares').checked && document.getElementById("Model").value))
     {
         if(!document.getElementById("IMEI").value)
         {
@@ -217,27 +218,20 @@ function goToBilling()
         if(JSON.parse(xmlHttp.responseText).length>0)
           window.location.href = "/billing?imei="+document.getElementById("IMEI").value;
         else
-        {
-         /* queryString="/searchBillingRecord?name=_id&value="+ document.getElementById("IMEI").value;
-          xmlHttp = new XMLHttpRequest();
+        {//alert("Search Inside Billing Table:"+JSON.parse(xmlHttp1.responseText).length)
+          queryString="/searchBillingRecord?name=_id&value="+ document.getElementById("IMEI").value;
+          var xmlHttp1 = new XMLHttpRequest();
           //var queryString="/searchRecord?name=_id&value="+ document.getElementById("IMEI").value;
-          xmlHttp.open( "GET", queryString, false ); // false for synchronous request
-          xmlHttp.send();
-          if(JSON.parse(xmlHttp.responseText).length>0)
-          window.location.href = "/billing?imei="+document.getElementById("IMEI").value;
-          else*/
-          alert("Given IMEI is not in inventory")
+          xmlHttp1.open( "GET", queryString, false ); // false for synchronous request
+          xmlHttp1.send();
+
+          if(JSON.parse(xmlHttp1.responseText).length>0){
+           window.location.href = "/billing?imei="+document.getElementById("IMEI").value;
+           getProdDetails();}
+          else
+           alert("Given IMEI is not in inventory")
         }  
     }
-  /*else if(document.getElementById('IsSpares').checked)
-  {
-      if(document.getElementById("Model").value)
-      {
-
-      }
-      else
-        alert("Please enter Model Num to bill Spares");
-  }*/
   else
     alert("Please enter IMEI Num to bill");
 
@@ -250,6 +244,7 @@ function Summary(){
     xmlHttp.open( "GET", "/summary", false ); // false for synchronous request
     xmlHttp.send();
     myList = JSON.parse(xmlHttp.responseText);
+    document.getElementById("Summary").hidden = false;
     document.getElementById("excelDataTable").innerHTML="";
     //document.getElementById("Summary").innerHTML=JSON.stringify(myList)    
     buildHtmlTable(myList,'#excelDataTable'); 
@@ -266,6 +261,31 @@ function DailySummary()
       {
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.open( "GET", "/dailySummary?date="+document.getElementById("Date").value, false ); // false for synchronous request
+      xmlHttp.send();
+      myList = JSON.parse(xmlHttp.responseText);
+      var total=0;
+      for(i=0;i<myList.length;i++)
+        {
+            total = +total + +myList[i]["SellingPrice"];
+        }
+      document.getElementById("Summary").hidden = false;
+      document.getElementById("Summary").innerHTML = "Sales Amount For Day: "+total;
+      document.getElementById("excelDataTable").innerHTML="";
+      //document.getElementById("Summary").innerHTML=JSON.stringify(myList)    
+      buildHtmlTable(myList,'#excelDataTable'); 
+      }
+}
+function ModelSummary()
+{
+  //alert(document.getElementById("Date").value)
+  if(document.getElementById("Date").value=="")
+    {
+      alert("Enter Date to get Daily Summary")
+    }
+    else
+      {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open( "GET", "/modelSummary?date="+document.getElementById("Date").value, false ); // false for synchronous request
       xmlHttp.send();
       myList = JSON.parse(xmlHttp.responseText);
       var total=0;

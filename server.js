@@ -25,6 +25,9 @@ app.get('/searchBillingRecord',function(req,res){
 app.get('/dailySummary',function(req,res){
         billFns.dailySummary(req,res);    
 })
+app.get('/modelSummary',function(req,res){
+        billFns.modelSummary(req,res);    
+})
 
 // Inventory Page
 

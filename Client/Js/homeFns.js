@@ -41,6 +41,7 @@ function Add()
                     "&discount="+document.getElementById("Discount").value +
                     "&comment="+document.getElementById("Comment").value +
                     "&avail="+document.getElementById("Availability").value +
+                    "&shopname="+document.getElementById("ShopName").value +
                     "&sparesflag="+document.getElementById('IsSpares').checked
     
         var xmlHttp = new XMLHttpRequest();
@@ -65,7 +66,8 @@ function Edit()
                     "&mop="+document.getElementById("MOP").value +
                     "&discount="+document.getElementById("Discount").value +
                     "&comment="+document.getElementById("Comment").value +
-                    "&avail="+document.getElementById("Availability").value
+                    "&avail="+document.getElementById("Availability").value +
+                    "&shopname="+document.getElementById("ShopName").value 
     
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", queryString, false ); // false for synchronous request

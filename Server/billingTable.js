@@ -17,7 +17,7 @@ insertBillingRecord = function(req,res){
         //Date:new Date().toString()
         var pRecord = {_id:req.query.imei.toString()+'_'+req.query.billno,BillNo:req.query.billno,Model:req.query.model,Date:req.query.date,SellingPrice:req.query.sellingprice,
             CustName:req.query.name,CustContact:req.query.contact,CustAddress:req.query.address,
-            Comment:req.query.comment};
+            Comment:req.query.comment,ShopName:req.query.shopname};
         db.collection(billCollectionName).insert(pRecord,function(err,result){
             db.close();
             if(err) res.send('IMEI already Billed');//throw err;

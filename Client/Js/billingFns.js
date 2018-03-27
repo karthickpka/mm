@@ -19,11 +19,11 @@ var setDate = function(){
         xmlHttp.open( "GET", queryString, false ); // false for synchronous request
         xmlHttp.send();
         temp = JSON.parse(xmlHttp.responseText);
-       
         document.getElementById("IMEI").innerHTML = temp[0]["_id"]
         document.getElementById("Model").innerHTML=temp[0]["Model"]
         document.getElementById("MRP").innerHTML=temp[0]["MRP"]
         document.getElementById("Discount").value=temp[0]["Discount"]
+        document.getElementById("ShopName").innerHTML=temp[0]["ShopName"]
         document.getElementById("Selling Price").innerHTML = document.getElementById("MRP").innerHTML 
                                                     - document.getElementById("Discount").value
         
@@ -54,6 +54,7 @@ var setDate = function(){
                 document.getElementById("Contact").value = tempBill[0]["CustContact"]
                 document.getElementById("Address").value = tempBill[0]["CustAddress"]
                 document.getElementById("BillNo").innerHTML = tempBill[0]["BillNo"]
+                document.getElementById("ShopName").innerHTML = tempBill[0]["ShopName"]
                 document.getElementById("Selling Price").value = tempBill[0]["SellingPrice"]
                 document.getElementById("Discount").innerHTML = temp[0]["MRP"] - tempBill[0]["SellingPrice"];//temp[0]["MRP"] - tempBill[0]["SellingPrice"]
                 //alert("Here:"+tempBill[0]["SellingPrice"])
@@ -90,6 +91,7 @@ function sellFunction(){
                             "&contact="+document.getElementById("Contact").value +
                             "&address="+document.getElementById("Address").value +
                             "&sellingprice="+document.getElementById("Selling Price").value +
+                            "&shopname="+document.getElementById("ShopName").innerHTML +
                             "&comment="+"";//document.getElementById("Comment").value;
             //alert(document.getElementById("Selling Price").innerHTML)
             xmlHttp.open( "GET", queryString, false ); // false for synchronous request

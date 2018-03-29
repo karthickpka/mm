@@ -12,7 +12,7 @@ viewAll = function(req,res){
     mongoClient.connect(url, function(err, db) {
         if (err) console.log(err); //throw err;
         // query = {name: "Karthick" }
-        db.collection(collectionName).find().limit(500).sort({Date:-1}).toArray(function(err, result) {
+        db.collection(collectionName).find().limit(25).sort({Date:-1}).toArray(function(err, result) {
             if (err) console.log(err); //throw err;
             db.close();
             res.send(result);
@@ -109,11 +109,14 @@ mongoClient.connect(url, function(err, db) {
 
 summary = function(req,res)
 {
+    query = {}
+     if(req.query.ShopName!="All")
+             query["ShopName"]=req.query.ShopName;
 //console.log("summary")
 mongoClient.connect(url,function(err,db){
      if (err) console.log(err); //throw err;
 
-      db.collection(collectionName).aggregate([{ $group: { _id: "$Model", total:{$sum: "$Availability" }}}]).sort({_id:1}).toArray(function(err,result){
+      db.collection(collectionName).aggregate([{$match: query},{ $group: { _id: "$Model", total:{$sum: "$Availability" }}}]).sort({_id:1}).toArray(function(err,result){
         if (err) console.log(err); //throw err;    
         res.send(result)
         db.close();

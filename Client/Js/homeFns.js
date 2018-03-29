@@ -244,7 +244,7 @@ function goToBilling()
 
 function Summary(){
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", "/summary", false ); // false for synchronous request
+    xmlHttp.open( "GET", "/summary?ShopName="+document.getElementById("ShopName").value, false ); // false for synchronous request
     xmlHttp.send();
     myList = JSON.parse(xmlHttp.responseText);
     document.getElementById("Summary").hidden = false;
@@ -283,12 +283,12 @@ function ModelSummary()
   //alert(document.getElementById("Date").value)
   if(document.getElementById("Date").value=="")
     {
-      alert("Enter Date to get Daily Summary")
+      alert("Enter Date to get Model Summary")
     }
     else
       {
       var xmlHttp = new XMLHttpRequest();
-      xmlHttp.open( "GET", "/modelSummary?date="+document.getElementById("Date").value, false ); // false for synchronous request
+      xmlHttp.open( "GET", "/modelSummary?date="+document.getElementById("Date").value+"&ShopName="+document.getElementById("ShopName").value, false ); // false for synchronous request
       xmlHttp.send();
       myList = JSON.parse(xmlHttp.responseText);
       var total=0;

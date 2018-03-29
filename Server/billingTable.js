@@ -76,11 +76,18 @@ mongoClient.connect(url,function(err,db){
 }
 modelSummary = function(req,res)
 {
+    //{ShopName:req.query.ShopName}
+    query = {};
+    if(req.query.ShopName=="All")
+         ;
+    else
+         {
+             query["ShopName"]=req.query.ShopName;
+         }
 //console.log(req.query.date)
 mongoClient.connect(url,function(err,db){
      if (err) console.log(err); //throw err;
-
-      db.collection(billCollectionName).aggregate([{ $group: { _id: "$Model", count:{$sum: 1 }}}]).sort({_id:1}).toArray(function(err,result){
+     db.collection(billCollectionName).aggregate([{$match: query},{ $group: { _id: "$Model", count:{$sum: 1 }}}]).sort({_id:1}).toArray(function(err,result){
         if (err) console.log(err); //throw err;    
         res.send(result)
         db.close();

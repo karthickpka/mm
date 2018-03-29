@@ -59,11 +59,15 @@ dailySummary = function(req,res)
 //console.log(req.query.date)
 mongoClient.connect(url,function(err,db){
      if (err) throw err;
-     if(req.query.ShopName=="All")
-     qVal = "";
-     else
-     qVal = ",{ShopName:"+req.query.ShopName+"}";
-    db.collection(billCollectionName).find({Date:req.query.date},{ShopName:req.query.ShopName}).sort({_id:1}).toArray(function(err,result){
+    var query = {};
+    if(req.query.ShopName=="All")
+         query["Date"] = req.query.date;
+    else
+         {
+             query["Date"] = req.query.date;
+             query["ShopName"]=req.query.ShopName;
+         }
+    db.collection(billCollectionName).find(query).sort({_id:1}).toArray(function(err,result){
         if (err) throw err;    
         res.send(result)
         db.close();

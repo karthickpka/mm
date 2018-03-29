@@ -10,10 +10,10 @@ url = "mongodb://localhost:27017/"+dbName
 viewAll = function(req,res){
     //console.log('View All function')
     mongoClient.connect(url, function(err, db) {
-        if (err) throw err;
+        if (err) console.log(err); //throw err;
         // query = {name: "Karthick" }
-        db.collection(collectionName).find().sort({Date:1}).toArray(function(err, result) {
-            if (err) throw err;
+        db.collection(collectionName).find().limit(500).sort({Date:-1}).toArray(function(err, result) {
+            if (err) console.log(err); //throw err;
             db.close();
             res.send(result);
         });
@@ -40,7 +40,7 @@ insertRecord = function(req,res){
 updateRecord = function(req,res){
     //console.log('Update record function')
     mongoClient.connect(url, function(err, db) {
-        if (err) throw err;
+        if (err) console.log(err); //throw err;
         //console.log(Object.keys(req.query).length)
 
         if(Object.keys(req.query).length==2)
@@ -54,7 +54,7 @@ updateRecord = function(req,res){
             }
             
         db.collection(collectionName).update({_id:req.query.imei.toString()},{$set: pRecord},function(err,result){
-            if(err) throw err;
+            if(err) console.log(err); //throw err;
             db.close();
             res.send('Record Updated')
         })
@@ -66,10 +66,10 @@ deleteRecord = function(req,res){
 //console.log('Delete Record');
 
 mongoClient.connect(url, function(err, db) {
-        if (err) throw err;
+        if (err) console.log(err); //throw err;
         //console.log(req.query.sparesflag.toString())
         db.collection(collectionName).remove({_id:req.query.imei.toString()},function(err,result){
-            if(err) throw err;
+            if(err) console.log(err); //throw err;
             db.close();
             res.send('Record removed')
         })
@@ -79,15 +79,28 @@ mongoClient.connect(url, function(err, db) {
 searchRecord = function(req,res){
 ///console.log('Search Record');
 mongoClient.connect(url, function(err, db) {
-        if (err) throw err;
+        if (err) console.log(err); //throw err;
         var query = {}
-        if(req.query.name)
-            query[req.query.name]= new RegExp(req.query.value,"i");
-        if(req.query.name=="_id")
-            query[req.query.name]= new RegExp("^"+req.query.value+"$","i");
+
+        if(req.query.ShopName=="All")
+         {
+            if(req.query.name)
+                query[req.query.name]= new RegExp(req.query.value,"i");
+            if(req.query.name=="_id")
+                query[req.query.name]= new RegExp("^"+req.query.value+"$","i");
+         }
+        else
+         {
+            if(req.query.name)
+                query[req.query.name]= new RegExp(req.query.value,"i");
+            if(req.query.name=="_id")
+                query[req.query.name]= new RegExp("^"+req.query.value+"$","i");
+            query["ShopName"]=req.query.ShopName;
+         }
+
         
-        db.collection(collectionName).find(query).sort({Date:1}).toArray(function(err, result) {
-            if (err) throw err;
+        db.collection(collectionName).find(query).sort({Date:-1}).toArray(function(err, result) {
+            if (err) console.log(err); //throw err;
             db.close();
             res.send(result);
         });
@@ -98,10 +111,10 @@ summary = function(req,res)
 {
 //console.log("summary")
 mongoClient.connect(url,function(err,db){
-     if (err) throw err;
+     if (err) console.log(err); //throw err;
 
       db.collection(collectionName).aggregate([{ $group: { _id: "$Model", total:{$sum: "$Availability" }}}]).sort({_id:1}).toArray(function(err,result){
-        if (err) throw err;    
+        if (err) console.log(err); //throw err;    
         res.send(result)
         db.close();
      })

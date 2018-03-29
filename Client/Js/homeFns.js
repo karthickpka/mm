@@ -103,13 +103,14 @@ function Search(){
 //http://localhost:4444/searchRecord?name=Comment&value=abc
 
     var xmlHttp = new XMLHttpRequest();
-    var queryString="/searchRecord";
+    var queryString="/searchRecord"+"?ShopName="+document.getElementById("ShopName").value;
     if(document.getElementById("SearchValue").value)
     {
     queryString= "/searchRecord?name="+document.getElementById("Name").value+"&value="+document.getElementById("SearchValue").value;
     document.getElementById("SearchValue").value ="";
+    queryString += "&ShopName="+document.getElementById("ShopName").value;
     }
-
+    
     xmlHttp.open( "GET", queryString, false ); // false for synchronous request
     xmlHttp.send();
     myList = JSON.parse(xmlHttp.responseText);

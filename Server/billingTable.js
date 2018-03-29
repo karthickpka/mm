@@ -29,7 +29,7 @@ insertBillingRecord = function(req,res){
 searchBillingRecord = function(req,res){
     //console.log('Search Billing Record');
     mongoClient.connect(url, function(err, db) {
-            if (err) throw err;
+            if (err) console.log(err); //throw err;
             var query = {}
             if(req.query.name)
                 {
@@ -38,15 +38,15 @@ searchBillingRecord = function(req,res){
                 if(req.query.value.toString().indexOf("_")>-1){//console.log(req.query.value.toString())
                     query[req.query.name]= new RegExp("^"+req.query.value+"$","i");
                 }
-                db.collection(billCollectionName).find(query).sort({Date:1}).toArray(function(err, result) {
-                    if (err) throw err;
+                db.collection(billCollectionName).find(query).sort({Date:-1}).toArray(function(err, result) {
+                    if (err) console.log(err);//throw err;
                     db.close();
                     res.send(result);
                     });
                 }
             else // Just get the Count of bills
                 db.collection(billCollectionName).count(function(err,result){
-                    if (err) throw err;
+                    if (err) console.log(err);//throw err;
                     db.close();
                     res.send(result.toString());
                 })
@@ -58,7 +58,7 @@ dailySummary = function(req,res)
 {
 //console.log(req.query.date)
 mongoClient.connect(url,function(err,db){
-     if (err) throw err;
+     if (err) console.log(err);//throw err;
     var query = {};
     if(req.query.ShopName=="All")
          query["Date"] = req.query.date;
@@ -68,7 +68,7 @@ mongoClient.connect(url,function(err,db){
              query["ShopName"]=req.query.ShopName;
          }
     db.collection(billCollectionName).find(query).sort({_id:1}).toArray(function(err,result){
-        if (err) throw err;    
+        if (err) console.log(err); //throw err;    
         res.send(result)
         db.close();
      })
@@ -78,10 +78,10 @@ modelSummary = function(req,res)
 {
 //console.log(req.query.date)
 mongoClient.connect(url,function(err,db){
-     if (err) throw err;
+     if (err) console.log(err); //throw err;
 
       db.collection(billCollectionName).aggregate([{ $group: { _id: "$Model", count:{$sum: 1 }}}]).sort({_id:1}).toArray(function(err,result){
-        if (err) throw err;    
+        if (err) console.log(err); //throw err;    
         res.send(result)
         db.close();
      })

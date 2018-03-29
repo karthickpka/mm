@@ -262,7 +262,7 @@ function DailySummary()
     else
       {
       var xmlHttp = new XMLHttpRequest();
-      xmlHttp.open( "GET", "/dailySummary?date="+document.getElementById("Date").value, false ); // false for synchronous request
+      xmlHttp.open( "GET", "/dailySummary?date="+document.getElementById("Date").value+"&ShopName="+document.getElementById("ShopName").value, false ); // false for synchronous request
       xmlHttp.send();
       myList = JSON.parse(xmlHttp.responseText);
       var total=0;

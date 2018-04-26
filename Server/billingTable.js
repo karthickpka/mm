@@ -81,6 +81,7 @@ modelSummary = function(req,res)
          ;
     else
          {
+             query["Date"] = req.query.date;
              query["ShopName"]=req.query.ShopName;
          }
 //console.log(req.query.date)

@@ -56,11 +56,10 @@ searchBillingRecord = function(req,res){
 
 dailySummary = function(req,res)
 {
-//console.log(req.query.date)
 mongoClient.connect(url,function(err,db){
      if (err) console.log(err);//throw err;
     var query = {};
-    if(req.query.ShopName=="All")
+    if(req.query.ShopName=="All" || !req.query.ShopName)
          query["Date"] = req.query.date;
     else
          {
@@ -78,7 +77,7 @@ modelSummary = function(req,res)
 {
     //{ShopName:req.query.ShopName}
     query = {};
-    if(req.query.ShopName=="All")
+    if(req.query.ShopName=="All" || !req.query.ShopName)
          ;
     else
          {

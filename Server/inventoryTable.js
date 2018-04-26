@@ -82,7 +82,7 @@ mongoClient.connect(url, function(err, db) {
         if (err) console.log(err); //throw err;
         var query = {}
 
-        if(req.query.ShopName=="All")
+        if(req.query.ShopName=="All"|| !req.query.ShopName)
          {
             if(req.query.name)
                 query[req.query.name]= new RegExp(req.query.value,"i");
@@ -97,8 +97,6 @@ mongoClient.connect(url, function(err, db) {
                 query[req.query.name]= new RegExp("^"+req.query.value+"$","i");
             query["ShopName"]=req.query.ShopName;
          }
-
-        
         db.collection(collectionName).find(query).sort({Date:-1}).toArray(function(err, result) {
             if (err) console.log(err); //throw err;
             db.close();
@@ -110,9 +108,8 @@ mongoClient.connect(url, function(err, db) {
 summary = function(req,res)
 {
     query = {}
-     if(req.query.ShopName!="All")
+    if(req.query.ShopName!="All" && req.query.ShopName)
              query["ShopName"]=req.query.ShopName;
-//console.log("summary")
 mongoClient.connect(url,function(err,db){
      if (err) console.log(err); //throw err;
 

@@ -1,9 +1,13 @@
 const http = require('http')
 const express = require('express')
+//var compression = require('compression')
 var dbFns = require('./Server/inventoryTable.js')
 var billFns = require('./Server/billingTable.js')
 const app = express()
 var port = 4444;
+
+// compress all requests 
+//app.use(compression())
 
 // Home Page
 app.use('/',express.static(__dirname+'//Client'));

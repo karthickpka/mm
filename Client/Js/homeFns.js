@@ -27,6 +27,11 @@ else{
 
 function Add()
 {
+  if(document.getElementById("ShopName").value=="All")
+    { 
+      alert("Select Specific Shop");
+      return;
+    }
 //http://localhost:4444/insertRecord?imei=1&model=1&mrp=1&mop=1&discount=1&comment=xyz
   if(document.getElementById('IsSpares').checked){
         document.getElementById("IMEI").value = document.getElementById("Model").value;
@@ -213,6 +218,8 @@ function goToBilling()
         }
         
         var queryString="/searchRecord?name=_id&value="+ document.getElementById("IMEI").value;   
+        queryString += "&ShopName="+document.getElementById("ShopName").value;
+   
         var xmlHttp = new XMLHttpRequest();
         //var queryString="/searchRecord?name=_id&value="+ document.getElementById("IMEI").value;
         xmlHttp.open( "GET", queryString, false ); // false for synchronous request
@@ -223,6 +230,7 @@ function goToBilling()
         else
         {//alert("Search Inside Billing Table:"+JSON.parse(xmlHttp1.responseText).length)
           queryString="/searchBillingRecord?name=_id&value="+ document.getElementById("IMEI").value;
+          queryString += "&ShopName="+document.getElementById("ShopName").value;
           var xmlHttp1 = new XMLHttpRequest();
           //var queryString="/searchRecord?name=_id&value="+ document.getElementById("IMEI").value;
           xmlHttp1.open( "GET", queryString, false ); // false for synchronous request

@@ -1,89 +1,104 @@
-<html>  
+<html>
 <link rel="stylesheet" type="text/css" href="../CSS/myStyle.css"></link>
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-body {font-family: "Lato", sans-serif}
-.mySlides {display: none}
+  body {
+    font-family: "Lato", sans-serif
+  }
+
+  .mySlides {
+    display: none
+  }
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="../Js/homeFns.js"></script>
 <script src="../Js/Authenticate.js"></script>
 
-    
-    
-    <Body  style="margin-left:100;background-color: lightblue;" onload="resetInputFields();setDate();">
-     <!onLoad="buildHtmlTable('#excelDataTable')">
-         <h1 align="left" style="padding-left:0.5em">MM Agencies Home Page </h1>
-    <br><button id="Billing" onclick="goToBilling()"><b>GoToBilling</b></button>
 
-    <input id="Password" type="password" placeholder="enter Password"/>
-    <button id="PasswordBtn" onclick="pwd()"><b>Login</b></button>
+
+<Body style="margin-left:100;background-color: lightblue;" onload="pwd();resetInputFields();setDate();">
+  <!onLoad="buildHtmlTable('#excelDataTable')">
+  <h1 align="left" style="padding-left:0.5em">MM Agencies Home Page </h1>
+  <br>
+  <button id="Billing" onclick="goToBilling()">
+    <b>GoToBilling</b>
+  </button>
+  <input type="submit" id="Logout" value="Logout" onclick="location.href ='/'" />
+  <br>
+
+
+  <p>
+    <b> Enter Details and Proceed</b>
+  </p>
+  <p></p>
+  <label>
+    <input style="width:2%;" type="checkbox" id="IsSpares" name="IsSpares" value="No" onclick="ChangeIMEI_Box_To_Count()">Check this for Covers and Pouches</label>
+  <p></p>
+  <div>
+    <input id="IMEI" name="IMEI" type="text" placeholder="enter IMEI" required/>
+    <input id="Model" name="Model" type="text" placeholder="enter Model" required/>
+    <input id="Date" name="Date" type="date" placeholder="enter Date" />
+    <div>
+      <input id="MRP" name="MRP" type="text" placeholder="enter MRP" />
+      <input id="MOP" name="MOP" type="text" placeholder="enter MOP" />
+      <input id="Discount" name="Discount" type="text" placeholder="enter Discount" />
+    </div>
+    <div>
+      <input id="Comment" name="Comment" type="text" placeholder="enter Comment" />
+      <input id="Availability" name="Availability" type="text" placeholder="enter Count" value="1" disabled/>
+      <select id="ShopName" name="ShopName" disabled>
+        <option value="Shop1">Shop1</option>
+        <option value="Shop2">Shop2</option>
+        <option value="Shop3">Shop3</option>
+        <option value="All">All</option>
+      </select>
+    </div>
     <br>
-   
-      
-        <p><b> Enter Details and Proceed</b></p>
-        <p></p>
-        <label><input style="width:2%;" type="checkbox" id="IsSpares" name="IsSpares" value="No" onclick="ChangeIMEI_Box_To_Count()">Check this for Covers and Pouches</label>
-        <p></p>
-        <div>
-          <input id="IMEI" name="IMEI" type="text" placeholder="enter IMEI" required/>
-          <input id="Model" name="Model" type="text" placeholder="enter Model" required/>
-          <input id="Date" name="Date" type="date" placeholder="enter Date" />
-          <div>
-          <input id="MRP" name="MRP" type="text" placeholder="enter MRP" />
-          <input id="MOP" name="MOP" type="text" placeholder="enter MOP" />
-          <input id="Discount" name="Discount" type="text" placeholder="enter Discount" />
-          </div>
-          <div>
-          <input id="Comment" name="Comment" type="text" placeholder="enter Comment" />
-          <input id="Availability" name="Availability" type="text" placeholder="enter Count" value="1" disabled/>
-          <select id="ShopName" name="ShopName">
-            <option value="Shop1">Shop1</option>
-            <option value="Shop2">Shop2</option>
-            <option value="Shop3">Shop3</option>
-            <option value="All">All</option> 
-          </select>
-        </div>  
-        <br>
-         
-        </div>
-        <!button onclick="viewAll()"ViewAll</button>
-        <button onclick="Add()">Add Record</button>
-        <button id="Edit" onclick="Edit()" disabled>Edit Record</button>
-        <button id="Delete" onclick="Delete()" disabled>Delete Record</button>
-        <br><br>
-        <button onclick="Summary()" >Unsold</button>
-        <button onclick="DailySummary()">Daily Summary</button>
-        <button onclick="ModelSummary()">Sold on Date</button>
-        <br></br>
-        
-        <div>
-          <select id="Name" name="Name">
-            <option value="_id">IMEI</option>
-            <option value="Model">Model</option>
-            <option value="ShopName">ShopName</option>
-            <option value="Date">Date</option>
-            <option value="MRP">MRP</option>
-            <option value="MOP">MOP</option>
-            <option value="Discount">Discount</option>
-            <option value="Comment">Comment</option>
-          </select>
 
-          <input id="SearchValue" name="SearchValue" type="text" placeholder="View All Value" />
-            <button onclick="Search()">Search</button>
-        </div>
+  </div>
+  <!button onclick="viewAll()"ViewAll</button>
+  <button onclick="Add()">Add Record</button>
+  <button id="Edit" onclick="Edit()" disabled>Edit Record</button>
+  <button id="Delete" onclick="Delete()" disabled>Delete Record</button>
+  <br>
+  <br>
+  <button onclick="Summary()">Unsold</button>
+  <button onclick="DailySummary()">Daily Summary</button>
+  <button onclick="ModelSummary()">Sold on Date</button>
+  <br></br>
 
-        
-        <div> 
-        <br>
-        <b><label id="Summary" hidden>Available Summary</label> </b>
-        <br><br><table id="excelDataTable" border="1" style="border-collapse:collapse;">
-        </table>
-        </div>
-    <br></br>
-    </Body>
+  <div>
+    <select id="Name" name="Name">
+      <option value="_id">IMEI</option>
+      <option value="Model">Model</option>
+      <option value="ShopName">ShopName</option>
+      <option value="Date">Date</option>
+      <option value="MRP">MRP</option>
+      <option value="MOP">MOP</option>
+      <option value="Discount">Discount</option>
+      <option value="Comment">Comment</option>
+    </select>
+
+    <input id="SearchValue" name="SearchValue" type="text" placeholder="View All Value" />
+    <button onclick="Search()">Search</button>
+  </div>
+
+
+  <div>
+    <br>
+    <b>
+      <label id="Summary" hidden>Available Summary</label>
+    </b>
+    <br>
+    <br>
+    <table id="excelDataTable" border="1" style="border-collapse:collapse;">
+    </table>
+  </div>
+  <br></br>
+</Body>
+
 </html>

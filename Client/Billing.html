@@ -1,121 +1,126 @@
 <html>
-    <script src="../Js/billingFns.js"></script>
-    <head>
-  <link rel="stylesheet" type="text/css" href="../CSS/myStyleBill.css"></link>
-  
-  </head>
-    <body onLoad="getProdDetails();setDate();" style="margin-left:100;background-color: lightblue;">
-    <div id="printableArea" >
-    <h1>MM Agencies Invoice </h1>
-    <hr>
-   <script>
-    document.write("<button id='back'" +
-        "onClick=\"document.location='/'\" " +
-        "class='printbutton' " +
-        ">Back To Home</button>");
-    </script>
-    <br><br>
-    <table>
-        <tr>
-            <td>
-                 <label>Bill No</label>
-            </td>
-            <td>
-                <label id="BillNo"></label> 
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label>ShopName</label>
-            </td>
-            <td>
-                <label id="ShopName"></label> 
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label>CustomerName</label>
-            </td>
-            <td>
-                <input id="CustomerName" type="text"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label>IMEI</label>
-            </td>
-            <td>
-                <label id="IMEI"></label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label>Date</label>
-            </td>
-            <td>
-                <input id="Date" type="date" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label>Model:</label>
-            </td>
-            <td>
-                <label id="Model"></label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                   <label >MRP(Rs):</label>
-            </td>
-            <td>
-                  <label id="MRP" name="MRP"></label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label>Discount</label>
-            </td>
-            <td>
-                <label id="Discount"></label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label>Billing Price(Rs)</label>
-            </td>
-            <td>
-                <input id="Selling Price" type="text" onchange="javascript:document.getElementById('Discount').innerHTML = document.getElementById('MRP').innerHTML - document.getElementById('Selling Price').value"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label>Contact</label>
-            </td>
-            <td>
-                <input id="Contact" type="text"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label>Address</label>
-            </td>
-            <td>
-                <input id="Address" type="text"/>
-            </td>
-        </tr>
-    </table>
-    <br>
+<script src="../Js/billingFns.js"></script>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="../CSS/myStyleBill.css"></link>
+
+</head>
+
+<body onLoad="getProdDetails();setDate();" style="margin-left:100;background-color: lightblue;">
+    <div id="printableArea">
+        <h1>MM Agencies Invoice </h1>
+        <hr>
+        <script>
+            document.write("<button id='back'" +
+                "onClick=\"document.location='/home'\" " +
+                "class='printbutton' " +
+                ">Back To Home</button>");
+        </script>
+        <br>
+        <br>
+        <table>
+            <tr>
+                <td>
+                    <label>Bill No</label>
+                </td>
+                <td>
+                    <label id="BillNo"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>ShopName</label>
+                </td>
+                <td>
+                    <label id="ShopName"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>CustomerName</label>
+                </td>
+                <td>
+                    <input id="CustomerName" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>IMEI</label>
+                </td>
+                <td>
+                    <label id="IMEI"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Date</label>
+                </td>
+                <td>
+                    <input id="Date" type="date" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Model:</label>
+                </td>
+                <td>
+                    <label id="Model"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>MRP(Rs):</label>
+                </td>
+                <td>
+                    <label id="MRP" name="MRP"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Discount</label>
+                </td>
+                <td>
+                    <label id="Discount"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Billing Price(Rs)</label>
+                </td>
+                <td>
+                    <input id="Selling Price" type="text" onchange="javascript:document.getElementById('Discount').innerHTML = document.getElementById('MRP').innerHTML - document.getElementById('Selling Price').value"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Contact</label>
+                </td>
+                <td>
+                    <input id="Contact" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Address</label>
+                </td>
+                <td>
+                    <input id="Address" type="text" />
+                </td>
+            </tr>
+        </table>
+        <br>
     </div>
-<!input type="button" onclick="sellFunction('printableArea')" value="Sell And Print Bill!" />
-<script>
-document.write("<input type='button' id='sellPrint'" +
-    "onClick='sellFunction()' " +
-    "class='printbutton' " +
-    "value='Sell And Print Bill'/>");
-</script>
-<!a href="javascript:window.print()">  
-<!input type="button" value="Sell & Print Bill"/>
+    <!input type="button" onclick="sellFunction('printableArea')" value="Sell And Print Bill!" />
+    <script>
+        document.write("<input type='button' id='sellPrint'" +
+            "onClick='sellFunction()' " +
+            "class='printbutton' " +
+            "value='Sell And Print Bill'/>");
+    </script>
+    <!a href="javascript:window.print()">
+    <!input type="button" value="Sell & Print Bill"/>
 
 </body>
+
 </html>

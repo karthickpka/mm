@@ -20,6 +20,12 @@ viewAll = function (req, res) {
 
 //Insert Record
 insertRecord = function (req, res) {
+    if(req.query.imei==null)
+    {
+        res.send('Null value sent'); 
+        console.log('req is:'+req.url.toString()); 
+    }
+    else
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err);//throw err;
         var pRecord = {
@@ -39,6 +45,12 @@ insertRecord = function (req, res) {
 //Update Record
 updateRecord = function (req, res) {
     //console.log('Update record function')
+    if(req.query.imei==null)
+    {
+        res.send('Null value sent'); 
+        console.log('req is:'+req.url.toString()); 
+    }
+    else
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err); //throw err;
         //console.log(Object.keys(req.query).length)
@@ -64,7 +76,12 @@ updateRecord = function (req, res) {
 //delete Record
 deleteRecord = function (req, res) {
     //console.log('Delete Record');
-
+    if(req.query.imei==null)
+    {
+        res.send('Null value sent'); 
+        console.log('req is:'+req.url.toString()); 
+    }
+    else
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err); //throw err;
         //console.log(req.query.sparesflag.toString())

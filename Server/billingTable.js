@@ -11,6 +11,12 @@ url = "mongodb://localhost:27017/" + dbName
 //Insert Record
 insertBillingRecord = function (req, res) {
     //console.log('insert Billing Record function')
+    if(req.query.imei==null)
+    {
+        res.send('Null value sent'); 
+        console.log('req is:'+req.url.toString()); 
+    }
+    else
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err);//throw err;
         //var pRecord = {_id:1,Date:Date.now(),Model:"M1",MRP:"0",MOP:"0",Discount:"0"};
@@ -30,6 +36,12 @@ insertBillingRecord = function (req, res) {
 };
 searchBillingRecord = function (req, res) {
     //console.log('Search Billing Record');
+    if(req.query.imei==null)
+    {
+        res.send('Null value sent'); 
+        console.log('req is:'+req.url.toString()); 
+    }
+    else
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err); //throw err;
         var query = {}

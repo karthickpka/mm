@@ -36,12 +36,6 @@ insertBillingRecord = function (req, res) {
 };
 searchBillingRecord = function (req, res) {
     //console.log('Search Billing Record');
-    if(req.query.imei==null)
-    {
-        res.send('Null value sent'); 
-        console.log('req is:'+req.url.toString()); 
-    }
-    else
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err); //throw err;
         var query = {}

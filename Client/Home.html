@@ -8,9 +8,11 @@
   body {
     font-family: "Lato", sans-serif
   }
-
   .mySlides {
     display: none
+  }
+  table{
+    border: 1;
   }
 </style>
 
@@ -20,9 +22,9 @@
 
 
 
-<Body style="margin-left:100;background-color: lightblue;" onload="pwd();resetInputFields();setDate();">
+<Body style="text-align:center; vertical-align:middle;background-color: #818181;" onload="pwd();resetInputFields();setDate();">
   <!onLoad="buildHtmlTable('#excelDataTable')">
-  <h1 align="left" style="padding-left:0.5em">MM Agencies Home Page </h1>
+  <h1 align="left" style="text-align:center;padding-left:0.5em">MM Agencies Home Page </h1>
   <br>
   <button id="Billing" onclick="goToBilling()">
     <b>GoToBilling</b>
@@ -51,9 +53,10 @@
       <input id="Comment" name="Comment" type="text" placeholder="enter Comment" />
       <input id="Availability" name="Availability" type="text" placeholder="enter Count" value="1" disabled/>
       <select id="ShopName" name="ShopName" disabled>
-        <option value="Shop1">Shop1</option>
-        <option value="Shop2">Shop2</option>
+        <option value="LMobiles">LMobiles</option>
+        <option value="MMMI">MMMI</option>
         <option value="Shop3">Shop3</option>
+        <option value="Shop4">Shop4</option>
         <option value="All">All</option>
       </select>
     </div>
@@ -67,20 +70,20 @@
   <br>
   <br>
   <button onclick="Summary()">Unsold</button>
-  <button onclick="DailySummary()">Daily Summary</button>
-  <button onclick="ModelSummary()">Sold on Date</button>
+  <button onclick="DailySummary()">Daily Bill</button>
+  <button onclick="ModelSummary()">Daily Model</button>
   <br></br>
 
   <div>
     <select id="Name" name="Name">
       <option value="_id">IMEI</option>
       <option value="Model">Model</option>
-      <option value="ShopName">ShopName</option>
+     <!-- <option value="ShopName">ShopName</option>
       <option value="Date">Date</option>
       <option value="MRP">MRP</option>
       <option value="MOP">MOP</option>
       <option value="Discount">Discount</option>
-      <option value="Comment">Comment</option>
+      <option value="Comment">Comment</option>-->
     </select>
 
     <input id="SearchValue" name="SearchValue" type="text" placeholder="View All Value" />
@@ -95,7 +98,7 @@
     </b>
     <br>
     <br>
-    <table id="excelDataTable" border="1" style="border-collapse:collapse;">
+    <table id="excelDataTable" border="1" align="center" ><!--style="border-collapse:collapse;"-->
     </table>
   </div>
   <br></br>

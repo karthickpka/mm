@@ -20,12 +20,13 @@ app.use('/',express.static(__dirname+'//Client'));
 
 //Homepage and Login
 app.get('/',function(req,res){
-        pSession = req.session;     
+          
         res.sendFile(__dirname+'//Client//Login.html')
         })
 app.get('/username',function(req,res){
                res.send(pSession.username);
                 })
+
 app.get('/home',function(req,res){
         if(pSession)
         {
@@ -44,6 +45,7 @@ app.get('/logout',function(req,res){
 app.post('/home',function(req,res){
         if(req.body.username==req.body.password)
         {
+                pSession = req.session;
                 pSession.username = req.body.username;
                 res.sendFile(__dirname+'//Client//Home.html')
         }

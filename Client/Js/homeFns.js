@@ -123,12 +123,11 @@ function Search() {
 
 function viewAll() {
   var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open("GET", "/viewAll", false); // false for synchronous request
+  xmlHttp.open("GET", "/searchRecord?ShopName=" + document.getElementById("ShopName").value, false); // false for synchronous request
   xmlHttp.send();
   myList = JSON.parse(xmlHttp.responseText);
   document.getElementById("excelDataTable").innerHTML = "";
   buildHtmlTable(myList, '#excelDataTable');
-
   //var sold = myList.filter(function(tmp){ return tmp.Availability=="Sold"}).length;
   //Calculate Summary
   document.getElementById("Summary").hidden = false;
@@ -136,10 +135,8 @@ function viewAll() {
     myList.length + " / " +
     myList.filter(function (tmp) { return tmp.Availability == "0" }).length + " / " +
     myList.filter(function (tmp) { return tmp.Availability > 0 }).length
-
   // Reset Input box values
   resetInputFields();
-
 }
 
 function buildHtmlTable(myList, selector) {
@@ -160,6 +157,7 @@ function buildHtmlTable(myList, selector) {
       }
       if (cellValue == null) cellValue = "";
       row$.append($('<td/>').html(cellValue));
+     //alert(cellValue.replace("T00:00:00.000Z","")) 
     }
     $(selector).append(row$);
   }
@@ -177,7 +175,7 @@ function addAllColumnHeaders(myList, selector) {
     for (var key in rowHash) {
       if ($.inArray(key, columnSet) == -1) {
         columnSet.push(key);
-        headerTr$.append($('<th/>').html(key));
+        headerTr$.append($('<th/>').html(key.replace("_id","IMEI")));
       }
     }
   }
@@ -185,6 +183,7 @@ function addAllColumnHeaders(myList, selector) {
 
   return columnSet;
 }
+
 function resetInputFields() {
   setDate();
   document.getElementById("IMEI").value = "";

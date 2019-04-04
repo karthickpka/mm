@@ -5,31 +5,27 @@ collectionName = "DataSet1";
 url = "mongodb://localhost:27017/" + dbName
 
 // View all
-viewAll = function (req, res) {
-    //console.log('View All function')
+/*viewAll = function (req, res) {
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err); //throw err;
-        // query = {name: "Karthick" }
-        db.collection(collectionName).find().limit(25).sort({ Date: -1 }).toArray(function (err, result) {
+        db.collection(collectionName).find().sort({ Date: 1 }).toArray(function (err, result) {
             if (err) console.log(err); //throw err;
             db.close();
             res.send(result);
         });
     });
-}
+}*/
 
 //Insert Record
 insertRecord = function (req, res) {
-    if(req.query.imei==null)
-    {
-        res.send('Null value sent'); 
+    if(req.query.imei==null){ res.send('Null value sent'); 
         console.log('req is:'+req.url.toString()); 
-    }
+        }
     else
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err);//throw err;
         var pRecord = {
-            _id: req.query.imei.toString(), Date: req.query.date, Model: req.query.model,
+            _id: req.query.imei.toString(), Date: new Date(req.query.date), Model: req.query.model,
             MRP: req.query.mrp, MOP: req.query.mop, Discount: req.query.discount,
             Availability: parseInt(req.query.avail), Comment: req.query.comment, ShopName: req.query.shopname
         };
@@ -44,29 +40,21 @@ insertRecord = function (req, res) {
 
 //Update Record
 updateRecord = function (req, res) {
-    //console.log('Update record function')
-    if(req.query.imei==null)
-    {
-        res.send('Null value sent'); 
-        console.log('req is:'+req.url.toString()); 
-    }
+    if(req.query.imei==null){res.send('Null value sent'); 
+        console.log('req is:'+req.url.toString()); }
     else
     mongoClient.connect(url, function (err, db) {
-        if (err) console.log(err); //throw err;
-        //console.log(Object.keys(req.query).length)
-
-        if (Object.keys(req.query).length == 2) {
-            pRecord = { _id: req.query.imei.toString(), Availability: parseInt(req.query.avail) };
-        }
-        else {
+        if (err) console.log(err);                  //throw err;
+        if (Object.keys(req.query).length == 2) {   // Update specific Field
+            pRecord = { _id: req.query.imei.toString(), Availability: parseInt(req.query.avail) };}
+        else {                                      // Update all fields
             pRecord = {
-                _id: req.query.imei.toString(), Date: req.query.date, Model: req.query.model, MRP: req.query.mrp, MOP: req.query.mop,
+                _id: req.query.imei.toString(), Date: new Date(req.query.date), Model: req.query.model, MRP: req.query.mrp, MOP: req.query.mop,
                 Discount: req.query.discount, Availability: parseInt(req.query.avail), Comment: req.query.comment, ShopName: req.query.shopname
             };
         }
-
         db.collection(collectionName).update({ _id: req.query.imei.toString() }, { $set: pRecord }, function (err, result) {
-            if (err) console.log(err); //throw err;
+            if (err) console.log(err);              //throw err;
             db.close();
             res.send('Record Updated')
         })
@@ -75,26 +63,20 @@ updateRecord = function (req, res) {
 
 //delete Record
 deleteRecord = function (req, res) {
-    //console.log('Delete Record');
-    if(req.query.imei==null)
-    {
-        res.send('Null value sent'); 
-        console.log('req is:'+req.url.toString()); 
-    }
+    if(req.query.imei==null)   {res.send('Null value sent'); 
+        console.log('req is:'+req.url.toString()); }
     else
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err); //throw err;
-        //console.log(req.query.sparesflag.toString())
         db.collection(collectionName).remove({ _id: req.query.imei.toString() }, function (err, result) {
             if (err) console.log(err); //throw err;
             db.close();
-            res.send('Record removed')
+            res.send('Deleted')
         })
     });
 };
 
 searchRecord = function (req, res) {
-    ///console.log('Search Record');
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err); //throw err;
         var query = {}
@@ -112,7 +94,7 @@ searchRecord = function (req, res) {
                 query[req.query.name] = new RegExp("^" + req.query.value + "$", "i");
             query["ShopName"] = req.query.ShopName;
         }
-        db.collection(collectionName).find(query).sort({ Date: -1 }).toArray(function (err, result) {
+        db.collection(collectionName).find(query,{MOP:0,Discount:0,Comment:0}).sort({ Date: -1 }).toArray(function (err, result) {
             if (err) console.log(err); //throw err;
             db.close();
             res.send(result);
@@ -123,7 +105,9 @@ searchRecord = function (req, res) {
 summary = function (req, res) {
     query = {}
     if (req.query.ShopName != "All" && req.query.ShopName)
-        query["ShopName"] = req.query.ShopName;
+    {//console.log("ShopFilter");    
+    query["ShopName"] = req.query.ShopName;}
+
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err); //throw err;
 
@@ -135,7 +119,7 @@ summary = function (req, res) {
     });
 }
 
-module.exports.viewAll = viewAll;
+//module.exports.viewAll = viewAll;
 module.exports.insertRecord = insertRecord;
 module.exports.updateRecord = updateRecord;
 module.exports.deleteRecord = deleteRecord;

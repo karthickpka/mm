@@ -3,14 +3,17 @@ function pwd() {
   xmlHttp.open("GET", '/username', false); // false for synchronous request
   xmlHttp.send();
 
-  if (xmlHttp.responseText == "shop1") {
-    document.getElementById('ShopName').value = "Shop1";
+  if (xmlHttp.responseText == "LMobiles") {
+    document.getElementById('ShopName').value = "LMobiles";
   }
-  else if (xmlHttp.responseText == "shop2") {
-    document.getElementById('ShopName').value = "Shop2";
+  else if (xmlHttp.responseText == "MMMI") {
+    document.getElementById('ShopName').value = "MMMI";
   }
   else if (xmlHttp.responseText == "shop3") {
     document.getElementById('ShopName').value = "Shop3";
+  }
+  else if (xmlHttp.responseText == "shop4") {
+    document.getElementById('ShopName').value = "Shop4";
   }
   else if (xmlHttp.responseText == "admin") {
     document.getElementById('ShopName').value = "All";

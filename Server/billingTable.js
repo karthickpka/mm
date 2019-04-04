@@ -22,13 +22,13 @@ insertBillingRecord = function (req, res) {
         //var pRecord = {_id:1,Date:Date.now(),Model:"M1",MRP:"0",MOP:"0",Discount:"0"};
         //Date:new Date().toString()
         var pRecord = {
-            _id: req.query.imei.toString() + '_' + req.query.billno, BillNo: req.query.billno, Model: req.query.model, Date: req.query.date, SellingPrice: req.query.sellingprice,
+            _id: req.query.imei.toString() + '_' + req.query.billno, BillNo: req.query.billno, Model: req.query.model, Date: new Date(req.query.date), SellingPrice: req.query.sellingprice,
             CustName: req.query.name, CustContact: req.query.contact, CustAddress: req.query.address,
             Comment: req.query.comment, ShopName: req.query.shopname
         };
         db.collection(billCollectionName).insert(pRecord, function (err, result) {
             db.close();
-            if (err) res.send('IMEI already Billed');//throw err;
+            if (err) {console.log(err);res.send('IMEI already Billed');}//throw err;
             else
                 res.send('Record Inserted to Billing')
         })
@@ -80,11 +80,11 @@ dailySummary = function (req, res) {
 }
 modelSummary = function (req, res) {
     //{ShopName:req.query.ShopName}
-    query = {};
+    query ={};
+    query["Date"] = req.query.date;;
     if (req.query.ShopName == "All" || !req.query.ShopName)
         ;
     else {
-        query["Date"] = req.query.date;
         query["ShopName"] = req.query.ShopName;
     }
     //console.log(req.query.date)

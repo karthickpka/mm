@@ -71,7 +71,7 @@ dailySummary = function (req, res) {
             query["Date"] = req.query.date;
             query["ShopName"] = req.query.ShopName;
         }
-        db.collection(billCollectionName).find(query).sort({ _id: 1 }).toArray(function (err, result) {
+        db.collection(billCollectionName).find(query,{CustName:0,CustAddress:0,Comment:0}).sort({ _id: 1 }).toArray(function (err, result) {
             if (err) console.log(err); //throw err;    
             res.send(result)
             db.close();

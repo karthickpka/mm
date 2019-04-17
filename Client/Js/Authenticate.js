@@ -3,17 +3,17 @@ function pwd() {
   xmlHttp.open("GET", '/username', false); // false for synchronous request
   xmlHttp.send();
 
-  if (xmlHttp.responseText == "LMobiles") {
-    document.getElementById('ShopName').value = "LMobiles";
+  if (xmlHttp.responseText == "LMMIUTG") {
+    document.getElementById('ShopName').value = "LMMIUTG";
   }
-  else if (xmlHttp.responseText == "MMMI") {
-    document.getElementById('ShopName').value = "MMMI";
+  else if (xmlHttp.responseText == "LMMIPO") {
+    document.getElementById('ShopName').value = "LMMIPO";
   }
-  else if (xmlHttp.responseText == "shop3") {
-    document.getElementById('ShopName').value = "Shop3";
+  else if (xmlHttp.responseText == "MMSHOP1") {
+    document.getElementById('ShopName').value = "MMSHOP1";
   }
-  else if (xmlHttp.responseText == "shop4") {
-    document.getElementById('ShopName').value = "Shop4";
+  else if (xmlHttp.responseText == "MMSHOP2") {
+    document.getElementById('ShopName').value = "MMSHOP2";
   }
   else if (xmlHttp.responseText == "admin") {
     document.getElementById('ShopName').value = "All";

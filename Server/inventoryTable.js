@@ -5,16 +5,21 @@ collectionName = "DataSet1";
 url = "mongodb://localhost:27017/" + dbName
 
 // View all
-/*viewAll = function (req, res) {
+viewAll = function (req, res) {
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err); //throw err;
-        db.collection(collectionName).find().sort({ Date: 1 }).toArray(function (err, result) {
+        
+        if(req.query.ShopName=='All')
+            query={};
+        else
+            query["ShopName"] = req.query.ShopName;
+        db.collection(collectionName).find(query).sort({ Date: 1 }).limit(25).toArray(function (err, result) {
             if (err) console.log(err); //throw err;
             db.close();
             res.send(result);
         });
     });
-}*/
+}
 
 //Insert Record
 insertRecord = function (req, res) {
@@ -119,7 +124,7 @@ summary = function (req, res) {
     });
 }
 
-//module.exports.viewAll = viewAll;
+module.exports.viewAll = viewAll;
 module.exports.insertRecord = insertRecord;
 module.exports.updateRecord = updateRecord;
 module.exports.deleteRecord = deleteRecord;

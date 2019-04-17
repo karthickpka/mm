@@ -56,6 +56,9 @@ function Add() {
 }
 
 function Edit() {
+  if (document.getElementById('IsSpares').checked) {
+    document.getElementById("IMEI").value = document.getElementById("Model").value;
+  }
   if (document.getElementById("IMEI").value) {
     queryString = "/updateRecord?imei=" + document.getElementById("IMEI").value +
       "&date=" + document.getElementById("Date").value +
@@ -282,7 +285,7 @@ function ModelSummary() {
       total = +total + +myList[i]["SellingPrice"];
     }
     document.getElementById("Summary").hidden = false;
-    document.getElementById("Summary").innerHTML = "Sales Amount For Day: " + total;
+    document.getElementById("Summary").innerHTML = "Model Wise Sales Summary: ";// + total;
     document.getElementById("excelDataTable").innerHTML = "";
     //document.getElementById("Summary").innerHTML=JSON.stringify(myList)    
     buildHtmlTable(myList, '#excelDataTable');

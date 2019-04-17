@@ -65,11 +65,12 @@ dailySummary = function (req, res) {
     mongoClient.connect(url, function (err, db) {
         if (err) console.log(err);//throw err;
         var query = {};
+        query["Date"] = new Date(req.query.date);
         if (req.query.ShopName == "All" || !req.query.ShopName)
-            query["Date"] = req.query.date;
+            ;
         else {
-            query["Date"] = req.query.date;
             query["ShopName"] = req.query.ShopName;
+            //console.log(query["Date"]+"dsfdf"+query["ShopName"])
         }
         db.collection(billCollectionName).find(query,{CustName:0,CustAddress:0,Comment:0}).sort({ _id: 1 }).toArray(function (err, result) {
             if (err) console.log(err); //throw err;    
@@ -81,7 +82,7 @@ dailySummary = function (req, res) {
 modelSummary = function (req, res) {
     //{ShopName:req.query.ShopName}
     query ={};
-    query["Date"] = req.query.date;;
+    query["Date"] =new Date(req.query.date);
     if (req.query.ShopName == "All" || !req.query.ShopName)
         ;
     else {

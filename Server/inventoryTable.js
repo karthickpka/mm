@@ -88,12 +88,18 @@ searchRecord = function (req, res) {
 
         if (req.query.ShopName == "All" || !req.query.ShopName) {
             if (req.query.name)
+                if(req.query.name=="Date")
+                query[req.query.name]= new Date(req.query.value);    
+                else
                 query[req.query.name] = new RegExp(req.query.value, "i");
             if (req.query.name == "_id")
                 query[req.query.name] = new RegExp("^" + req.query.value + "$", "i");
         }
         else {
             if (req.query.name)
+                if(req.query.name=="Date")
+                query[req.query.name]= new Date(req.query.value);    
+                else
                 query[req.query.name] = new RegExp(req.query.value, "i");
             if (req.query.name == "_id")
                 query[req.query.name] = new RegExp("^" + req.query.value + "$", "i");

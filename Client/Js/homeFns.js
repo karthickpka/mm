@@ -106,7 +106,12 @@ function Search() {
     document.getElementById("SearchValue").value = "";
     queryString += "&ShopName=" + document.getElementById("ShopName").value;
   }
-
+  if(document.getElementById("Name").value=="Date")
+  {
+    queryString = "/searchRecord?name=" + document.getElementById("Name").value + "&value=" + document.getElementById("Date").value;
+    document.getElementById("SearchValue").value = "";
+    queryString += "&ShopName=" + document.getElementById("ShopName").value;
+  }
   xmlHttp.open("GET", queryString, false); // false for synchronous request
   xmlHttp.send();
   myList = JSON.parse(xmlHttp.responseText);
@@ -261,7 +266,8 @@ function DailySummary() {
     myList = JSON.parse(xmlHttp.responseText);
     var total = 0;
     for (i = 0; i < myList.length; i++) {
-      total = +total + +myList[i]["SellingPrice"];
+      if(!isNaN(myList[i]["SellingPrice"]))
+        total = +total + +myList[i]["SellingPrice"];
     }
     document.getElementById("Summary").hidden = false;
     document.getElementById("Summary").innerHTML = "Sales Amount For Day: " + total;

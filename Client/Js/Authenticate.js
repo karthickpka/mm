@@ -3,11 +3,11 @@ function pwd() {
   xmlHttp.open("GET", '/username', false); // false for synchronous request
   xmlHttp.send();
 
-  if (xmlHttp.responseText == "LMMIUTG") {
-    document.getElementById('ShopName').value = "LMMIUTG";
+  if (xmlHttp.responseText == "LNMIUTG") {
+    document.getElementById('ShopName').value = "LNMIUTG";
   }
-  else if (xmlHttp.responseText == "LMMIPO") {
-    document.getElementById('ShopName').value = "LMMIPO";
+  else if (xmlHttp.responseText == "LNMIPO") {
+    document.getElementById('ShopName').value = "LNMIPO";
   }
   else if (xmlHttp.responseText == "MMSHOP1") {
     document.getElementById('ShopName').value = "MMSHOP1";

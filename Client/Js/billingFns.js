@@ -74,6 +74,11 @@ function getProdDetails() {
 
 
 function sellFunction() {
+    if(isNaN(+document.getElementById("Selling Price").value))
+    {
+        alert("Not a Valid Billing Price");
+        return;
+    }
     // Insert into Billing Table
     //alert("Sell For:"+document.getElementById("Selling Price").value);
     if (document.getElementById('sellPrint').value == "Sell And Print Bill") {

@@ -147,25 +147,19 @@ function viewAll() {
   resetInputFields();
 }
 
+// Json list and html ID of a table as input
 function buildHtmlTable(myList, selector) {
-
   var columns = addAllColumnHeaders(myList, selector);
 
   for (var i = 0; i < myList.length; i++) {
     var row$ = $('<tr/>');
     for (var colIndex = 0; colIndex < columns.length; colIndex++) {
-      //alert(typeof(myList[i][columns[colIndex]]))
       var cellValue = myList[i][columns[colIndex]];
-
-      if (typeof (myList[i][columns[colIndex]]) == 'object') {
-        cellValue = JSON.stringify(myList[i][columns[colIndex]]);
-        //  / alert(cellValue)
-        cellValue = JSON.stringify(myList[i][columns[colIndex]]).replace("{\"Model\":\"", "")
-          .replace("\",\"Availability\":\"", "-").replace("\"}", "")
-      }
+      //Remove Time Format in Date Column
+      if(columns[colIndex]=="Date")
+       cellValue=cellValue.toString().replace("T00:00:00.000Z","");
       if (cellValue == null) cellValue = "";
-      row$.append($('<td/>').html(cellValue));
-     //alert(cellValue.replace("T00:00:00.000Z","")) 
+      row$.append($('<td/>').html(cellValue));  
     }
     $(selector).append(row$);
   }
@@ -177,20 +171,17 @@ function buildHtmlTable(myList, selector) {
 function addAllColumnHeaders(myList, selector) {
   var columnSet = [];
   var headerTr$ = $('<tr/>');
-
-  for (var i = 0; i < myList.length; i++) {
-    var rowHash = myList[i];
-    for (var key in rowHash) {
+  for (var key in myList[0]) {
       if ($.inArray(key, columnSet) == -1) {
         columnSet.push(key);
         headerTr$.append($('<th/>').html(key.replace("_id","IMEI")));
       }
     }
-  }
   $(selector).append(headerTr$);
-
   return columnSet;
 }
+
+
 
 function resetInputFields() {
   setDate();

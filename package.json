@@ -10,9 +10,9 @@
   "author": "Karthick",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.2",
-    "express-session": "^1.15.6",
-    "mongodb": "^2.2.33"
+    "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "mongodb": "^2.2.36"
   },
   "devDependencies": {},
   "repository": {
